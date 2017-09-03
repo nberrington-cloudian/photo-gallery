@@ -13,39 +13,23 @@ var options = {
   title: 'Demo Photo Gallery',
   thumbnail: false,
   bucket: "/tmp/photos",
-  // These options are ignored if "s3:" is not in the path/bucket name
   region: "us-west-1",
   s3Type: "aws", //"gfs" for gluster
   clusterIP: null,
-  clusterPort: null
 };
 
 // Valid options.buckets
 // local : "/tmp/photos/"
 // AWS S3: bucket: zac-demo-bucket1,  s3Type: "aws",Region: "us-west-1"
-// Gluster: bucket bucket-demo-1, s3Type: "gfs", clusterIP: "12.34.56.78"
+// Gluster: *** REQUIRES MICROSERVICES RUNNING **** bucket: bucket-demo-1, s3Type: "gfs", clusterIP: "12.34.56.78:12345"
 
-/* Config File:
-export OBJECT_STORAGE_BUCKET1="demo-bucket1"
-export OBJECT_STORAGE_BUCKET2="demo-bucket2"
-export OBJECT_STORAGE_REGION="us-west-1"
-export OBJECT_STORAGE_S3_TYPE="gfs"
-export OBJECT_STORAGE_CLUSTER_IP="33.24.24.24"
-export OBJECT_STORAGE_CLUSTER_IP="33104"
-
-*/
 
 // Go thru our expected environment values to see if they are set
-var envStorageBucket1 = process.env.OBJECT_STORAGE_BUCKET1;
-var envStorageBucket2 = process.env.OBJECT_STORAGE_BUCKET2;
-var envStorageRegion = process.env.OBJECT_STORAGE_REGION;
-var envS3Type = process.env.OBJECT_STORAGE_S3_TYPE;
-var envClusterIP = process.env.OBJECT_STORAGE_CLUSTER_IP;
-var envClusterPort = process.env.OBJECT_STORAGE_CLUSTER_PORT;
+var envStorageBucket1 = process.env.BUCKET_NAME;  //required
+var envS3Type = process.env.OBJECT_STORAGE_S3_TYPE; //required
+var envStorageRegion = process.env.OBJECT_STORAGE_REGION;  //only required for AWS
+var envClusterIP = process.env.BUCKET_ENDPOINT; //only for displaying what microservices use
 
-if (envStorageBucket1) {
-    options.bucket = envStorageBucket1;
-}
 if (envStorageRegion) {
     options.region = envStorageRegion;
 }
@@ -53,10 +37,20 @@ if (envS3Type) {
     options.s3Type = envS3Type;
 }
 if (envClusterIP) {
-    options.clusterIP = envClusterIP;
+    if (options.s3Type == "gfs") {
+      options.clusterIP = new Buffer(envClusterIP, 'base64').toString("ascii");
+    }
+    else {
+      options.clusterIP = envClusterIP;
+    }
 }
-if (envClusterPort) {
-    options.clusterPort = envClusterPort;
+if (envStorageBucket1) {
+  if (options.s3Type == "gfs") {
+    options.bucket = new Buffer(envStorageBucket1, 'base64').toString("ascii");
+  }
+  else {
+    options.bucket = envStorageBucket1;
+  }
 }
 
 

@@ -32,8 +32,7 @@
         <p>Bucket = <span id="storagepath"></span></p>
         <p>Region = <span id="region"></span></p>
         <p>S3 Type = <span id="s3type"></span></p>
-        <p>Cluster IP = <span id="clusterip"></span></p>
-        <p>Cluster Port = <span id="clusterport"></span></p>
+        <p>Cluster IP : Port= <span id="clusterip"></span></p>
 
     </div>
 </div>
@@ -43,7 +42,6 @@
         document.getElementById("region").innerHTML = data.region ? data.region : "Not Set";
         document.getElementById("s3type").innerHTML = data.s3Type;
         document.getElementById("clusterip").innerHTML = data.clusterIP ? data.clusterIP : "Not Set";
-        document.getElementById("clusterport").innerHTML = data.clusterPort ? data.clusterPort : "Not Set";
     });
 </script>
 </body>
