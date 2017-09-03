@@ -1,0 +1,56 @@
+{
+  "name": "Object-store-photo-gallery",
+  "version": "1.0.0",
+  "description": "Photo web demo for object storage using express photo gallery",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -t 4000"
+  },
+  "keywords": [
+    "photo",
+    "photos",
+    "lightgallery",
+    "gallery",
+    "photogallery"
+  ],
+  "author": "zherman <zherman@redhat.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zherman0/express-photo-gallery"
+  },
+  "license": "GPL-3.0",
+  "dependencies": {
+    "deep-equal": "^1.0.1",
+    "lg-fullscreen": "^1.0.1",
+    "lg-thumbnail": "^1.0.3",
+    "lg-zoom": "^1.0.4",
+    "lightgallery": "^1.3.9",
+    "mustache": "^2.3.0",
+    "object-assign": "^4.1.1",
+    "request": "^2.81.0",
+    "router": "^1.3.0",
+    "serve-static": "^1.12.1",
+    "xml2js": "^0.4.17",
+    "busboy": "^0.2.14",
+    "fs-extra": "^4.0.1",
+    "streamifier": "^0.1.1",
+    "aws-sdk":"*",
+    "express-fileupload":"*",
+    "express-photo-gallery":"*",
+    "minio":"*",
+    "node-rest-client":"*",
+  },
+  "devDependencies": {
+    "async": "^2.3.0",
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "body-parser": "^1.17.2",
+    "coveralls": "^2.13.1",
+    "eslint": "^4.5.0",
+    "eslint-config-google": "^0.9.1",
+    "express": "^4.15.4",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.5.0",
+    "supertest": "^3.0.0"
+  }
+}
