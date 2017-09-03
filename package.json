@@ -4,7 +4,7 @@
   "description": "Photo web demo for object storage using express photo gallery",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -t 4000"
+    "start": "node app.js"
   },
   "keywords": [
     "photo",
@@ -37,7 +37,6 @@
     "aws-sdk":"*",
     "express-fileupload":"*",
     "express-photo-gallery":"*",
-    "minio":"*",
     "node-rest-client":"*"
   },
   "devDependencies": {
