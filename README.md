@@ -8,11 +8,13 @@ This is heavily -- heavily -- modified to read data from local, aws, and a glust
 ## Usage:
 
 #### Install:
-'git clone https://github.com/zherman0/gallery-demo.git'
+'git clone https://github.com/zherman0/gallery-demo.git'`
+
 `npm install`
 
 #### Environment Variables:
 Since this is meant to be run in a container, pass in variables through imports or use the demo files
+
 `. ./demo.config`
 
 #### Run:
