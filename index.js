@@ -27,9 +27,12 @@ module.exports = function(photoPath, options) {
     paths.bucket = photoPath;
   }
 
-  if (!s3) {
+  if (options.s3Type === 'local') {
 
-    if (!directoryExists(photoPath)) throw new Error('Must provide valid path for photos');
+    if (!directoryExists(photoPath)) {
+      console.log('Must provide valid path for photos, setting /tmp for now');
+      photoPath = "/tmp";
+    }
 
     app.use('/photos', static(photoPath));
   }

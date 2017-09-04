@@ -13,5 +13,11 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-EXPOSE 3000
-CMD [ "npm", "start" ]
+# Get binary for our go server
+COPY golang-object-store-service .
+
+COPY demo-start.sh .
+
+EXPOSE 3000 8888
+
+CMD [ "./demo-start.sh" ]
