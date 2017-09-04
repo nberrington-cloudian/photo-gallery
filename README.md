@@ -3,7 +3,7 @@ Picture viewer demo that pulls from various object stores
 
 This started off from EPG (express-photo-gallery), which is a node module that creates an Express.js middleware function for hosting stylish and responsive photo galleries using [jQuery lightgallery](http://sachinchoolur.github.io/lightGallery/).
 
-This is heavily -- heavily -- modified to read data from local, aws, and a gluster fs which is access through other microservices (see my golang-object-store-service)*[]: 
+This is heavily -- heavily -- modified to read data from local, aws, and a custom gluster fs *[]: 
 
 ## Usage:
 

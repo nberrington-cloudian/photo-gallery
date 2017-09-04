@@ -5,19 +5,12 @@ WORKDIR /usr/src/app
 
 # Install app dependencies
 COPY package.json .
-# For npm@5 or later, copy package-lock.json as well
-# COPY package.json package-lock.json ./
 
 RUN npm install
 
 # Bundle app source
 COPY . .
 
-# Get binary for our go server
-COPY golang-object-store-service .
+EXPOSE 3000
 
-COPY demo-start.sh .
-
-EXPOSE 3000 8888
-
-CMD [ "./demo-start.sh" ]
+CMD [ "npm" , "start" ]

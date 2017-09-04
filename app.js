@@ -16,6 +16,8 @@ var options = {
   region: "us-west-1",
   s3Type: "aws", //"gfs" for gluster
   clusterIP: null,
+  akid: null,
+  sak: null
 };
 
 // Valid options.buckets
@@ -28,7 +30,9 @@ var options = {
 var envStorageBucket1 = process.env.BUCKET_NAME;  //required
 var envS3Type = process.env.OBJECT_STORAGE_S3_TYPE; //required
 var envStorageRegion = process.env.OBJECT_STORAGE_REGION;  //only required for AWS
-var envClusterIP = process.env.BUCKET_ENDPOINT; //only for displaying what microservices use
+var envClusterIP = process.env.BUCKET_ENDPOINT; //only for gfs
+var envBucketID = process.env.BUCKET_ID; //only for gfs
+var envBucketPW = process.env.BUCKET_PWORD; //only for gfs
 
 if (envStorageRegion) {
     options.region = envStorageRegion;
@@ -52,13 +56,25 @@ if (envStorageBucket1) {
     options.bucket = envStorageBucket1;
   }
 }
+if (envBucketID) {
+    if (options.s3Type == "gfs") {
+      options.akid = new Buffer(envBucketID, 'base64').toString("ascii");
+    }
+}
+if (envBucketPW) {
+    if (options.s3Type == "gfs") {
+      options.sak = new Buffer(envBucketPW, 'base64').toString("ascii");
+    }
+}
 
 
 app.use(express.static(__dirname + '/public'));
 
-//app.use('/photos', Gallery(options.bucket, options));
 app.use('/photos', require(__dirname + '/index.js')(options.bucket, options));
 
+app.get('/getFile/:bucket/:filename',function(req,res){
+     require(__dirname + '/get_file.js')(res,req, options);
+});
 
 app.use(fileUpload());
 
@@ -104,28 +120,24 @@ app.post('/upload', function(req, res) {
   }
   else if (options.s3Type === 'gfs'){ //use this for gluster Obj Store
 
-    var goapiserver = "http://localhost";
-    var goapiserverPort = "8888";
-    var method = "putFile";
-    var bucket = options.bucket;
+    var s3 = new aws.S3({
+      signatureVersion: 'v2',
+      endpoint: options.clusterIP,
+      s3BucketEndpoint: true,
+      s3ForcePathStyle: true,
+      accessKeyId: options.akid,
+      secretAccessKey: options.sak,
+      sslEnabled: false });
 
-    var apiUrl = goapiserver + ':' + goapiserverPort + '/' + method + '/' + bucket +'/' + req.files.sampleFile.name;
-
-request({
-  url: apiUrl,
-  method: 'POST',
-  formData: {
-//    'name': req.files.sampleFile.name,
-    'data': new Buffer(req.files.sampleFile.data)
-  }
-},function (error, response, body) {
-      if (error) {
-        return console.error('upload failed:', error);
-      }
-      console.log('Upload successful!  Server responded with:', body);
- });
-
-
+     var param = {
+      Bucket: options.bucket,
+      Key: req.files.sampleFile.name,
+      Body: new Buffer(sampleFile.data)
+    };
+    s3.putObject(param, function(err, data){
+      if(err) console.log(err);
+      else console.log(data);
+    });
 
   } //end if gfs
 
