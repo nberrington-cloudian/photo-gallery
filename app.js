@@ -41,30 +41,16 @@ if (envS3Type) {
     options.s3Type = envS3Type;
 }
 if (envClusterIP) {
-    if (options.s3Type == "gfs") {
-      options.clusterIP = new Buffer(envClusterIP, 'base64').toString("ascii");
-    }
-    else {
       options.clusterIP = envClusterIP;
-    }
 }
 if (envStorageBucket1) {
-  if (options.s3Type == "gfs") {
-    options.bucket = new Buffer(envStorageBucket1, 'base64').toString("ascii");
-  }
-  else {
     options.bucket = envStorageBucket1;
-  }
 }
 if (envBucketID) {
-    if (options.s3Type == "gfs") {
-      options.akid = new Buffer(envBucketID, 'base64').toString("ascii");
-    }
+      options.akid = envBucketID;
 }
 if (envBucketPW) {
-    if (options.s3Type == "gfs") {
-      options.sak = new Buffer(envBucketPW, 'base64').toString("ascii");
-    }
+      options.sak = envBucketPW;
 }
 
 
