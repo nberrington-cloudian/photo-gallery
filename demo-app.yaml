@@ -25,10 +25,10 @@ spec:
               key: bucketID
 
     - name: BUCKET_PWORD
-      secretKeyRef:
       valueFrom:
-            name: s3-binding
-            key: bucketPword
+           secretKeyRef:
+             name: s3-binding
+             key: bucketPword
     image: localhost:5000/demo-app:latest
     imagePullPolicy: Always
     name: demo-app
