@@ -54,7 +54,8 @@ if (envBucketPW) {
 }
 
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('public'));
+//app.use(express.static(__dirname + '/public/images'));
 
 app.use('/photos', require(__dirname + '/index.js')(options.bucket, options));
 

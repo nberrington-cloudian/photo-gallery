@@ -11,7 +11,7 @@
 <div style="margin:100px;">
     <nav class="navbar navbar-inverse navbar-static-top">
         <div class="container">
-            <a class="navbar-brand" href="/">Photo Store</a>
+            <a class="navbar-brand" href="/">Object Store</a>
             <ul class="nav navbar-nav">
                 <li class="active">
                     <a href="index.html">Home</a>
@@ -25,23 +25,42 @@
             </ul>
         </div>
     </nav>
-    <div class="jumbotron"  style="padding:40px;">
-        <h1>Welcome to the Object Store Photo Gallery</h1>
-        <p>This is a simple demo to show object store.</p>
+    <div class="jumbotron text-center"  style="padding:40px; margin:auto;">
+        <h1>Object Store Photo Gallery</h1>
+        <p>This is a simple demo to show object store in a web application.</p>
         <p><a class="btn btn-primary btn-lg" href="/photos" role="button">Go to Photos</a></p>
-        <p>Bucket = <span id="storagepath"></span></p>
-        <p>Region = <span id="region"></span></p>
-        <p>S3 Type = <span id="s3type"></span></p>
-        <p>Cluster IP : Port= <span id="clusterip"></span></p>
+        <br/><br/>
+        <table border="0" style="margin:auto">
+            <tr>
+                <td align="center" style="padding:20px;">
+                    <img src="./images/bucket_icon2.png" style="height:40px; margin:auto;"/><br/>
+                    <span id="storagepath"></span>
+                </td>
+                <td align="center" style="padding:20px;">
+                    <img src="./images/cloudnetwork1.png" style="height:40px" /><br/><span id="clusterip"></span>
+                </td>
+                <td align="center" style="padding:20px;">
+                    <img src="./images/port1.png" style="height:40px" /><br/><span id="port"></span>
+                </td>
+            </tr>
+        </table>
+
+
+        <!--<p>Bucket = <span id="storagepath"></span></p>-->
+        <!--<p>Region = <span id="region"></span></p>-->
+        <!--<p>S3 Type = <span id="s3type"></span></p>-->
+        <!--<p>Cluster IP : Port= <span id="clusterip"></span></p>-->
 
     </div>
 </div>
 <script>
     $.get( "/getvar", function( data ) {
         document.getElementById("storagepath").innerHTML = data.bucket;
-        document.getElementById("region").innerHTML = data.region ? data.region : "Not Set";
-        document.getElementById("s3type").innerHTML = data.s3Type;
-        document.getElementById("clusterip").innerHTML = data.clusterIP ? data.clusterIP : "Not Set";
+        <!--document.getElementById("region").innerHTML = data.region ? data.region : "Not Set";-->
+        <!--document.getElementById("s3type").innerHTML = data.s3Type;-->
+        var res = data.clusterIP.split(":");
+        document.getElementById("clusterip").innerHTML = data.clusterIP ? res[0] : "Not Set";
+        document.getElementById("port").innerHTML = data.clusterIP ? res[1] : "Not Set";
     });
 </script>
 </body>
