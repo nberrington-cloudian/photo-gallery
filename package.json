@@ -34,10 +34,10 @@
     "busboy": "^0.2.14",
     "fs-extra": "^4.0.1",
     "streamifier": "^0.1.1",
-    "aws-sdk":"*",
-    "express-fileupload":"*",
-    "express-photo-gallery":"*",
-    "node-rest-client":"*"
+    "aws-sdk": "*",
+    "express-fileupload": "*",
+    "express-photo-gallery": "*",
+    "node-rest-client": "*"
   },
   "devDependencies": {
     "async": "^2.3.0",
