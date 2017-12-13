@@ -134,7 +134,7 @@ app.post('/upload', function(req, res) {
 //   res.send('File uploaded!');
   setTimeout(function() {
     res.redirect('/photos');
-  }, 10000);
+  }, 3000);
 //   res.redirect('/photos');
 
 });
