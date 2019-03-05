@@ -93,11 +93,14 @@ app.post('/upload', function(req, res) {
   else if (options.s3Type === 'aws'){  //Object Store like S3 or glusterFS
 
     //need to putObject
-    var s3 = new aws.S3();
+    var s3 = new aws.S3({
+      accessKeyId: options.akid,
+      secretAccessKey: options.sak,
+      sslEnabled: true });
     var param = {
       Bucket: options.bucket,
       Key: req.files.sampleFile.name,
-      Body: new Buffer(sampleFile.data)
+      Body: Buffer.from(sampleFile.data)
     };
     s3.putObject(param, function(err, data){
       if(err) console.log(err);
@@ -119,7 +122,7 @@ app.post('/upload', function(req, res) {
      var param = {
       Bucket: options.bucket,
       Key: req.files.sampleFile.name,
-      Body: new Buffer(sampleFile.data)
+      Body: Buffer.from(sampleFile.data)
     };
     s3.putObject(param, function(err, data){
       if(err) console.log(err);

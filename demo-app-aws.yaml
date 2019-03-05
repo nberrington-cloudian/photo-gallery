@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-app
+  labels:
+    run: demo-example
+spec:
+  containers:
+  - env:
+    - name: BUCKET_NAME
+      value: demo-test-bucket-1
+    - name: OBJECT_STORAGE_S3_TYPE
+      value: aws
+    - name: OBJECT_STORAGE_REGION
+      value: us-west-1
+    # See awsdemo.config file for PUBLIC bucket policy 
+    # if your bucket is NOT public to the world
+    #- name: BUCKET_ID
+    #  value: your-aws-id
+    #- name: BUCKET_PWORD
+    #  value: your-aws-secret-key
+    image: docker.io/zherman/demo:latest
+    imagePullPolicy: Always
+    name: demo-app
+    ports:
+    - containerPort: 3000
+      protocol: TCP

@@ -46,7 +46,7 @@ module.exports = function(photoPath, options) {
 
     if (options.s3Type === 'aws') {
 
-      getS3Payload(paths.bucket, options, function(payload) {
+      getS3Payload(options, function(payload) {
         res.send(mustache.render(template, {
           title: options.title || 'Photo Gallery',
           bucket: options.bucket || 'Unknown',

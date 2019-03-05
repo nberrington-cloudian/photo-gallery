@@ -2,15 +2,14 @@ var aws = require('aws-sdk');
 
 module.exports = function(res,req,options) {
 
-  var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-
-
   var bucket = req.params.bucket;
   var filename = req.params.filename;
 
   var akid = options.akid;
   var sak = options.sak;
-  var s3 = new aws.S3({
+  var s3;
+  if (options.s3Type == "gfs") {
+    s3 = new aws.S3({
       signatureVersion: 'v2',
       endpoint: options.clusterIP,
       s3BucketEndpoint: true,
@@ -18,7 +17,13 @@ module.exports = function(res,req,options) {
       accessKeyId: akid,
       secretAccessKey: sak,
       sslEnabled: false });
-
+  }
+  else {
+    s3 = new aws.S3({
+      accessKeyId: akid,
+      secretAccessKey: sak,
+      sslEnabled: true });
+  }
     var params = {
       Bucket: bucket,
       Key: filename
