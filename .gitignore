@@ -1,0 +1,9 @@
+.idea/
+.vscode/
+node_modules/
+npm-debug.log
+package-lock.json
+demo-real.config
+fix.sh
+
+
