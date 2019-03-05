@@ -8,7 +8,8 @@ exports.buildS3url = function(options) {
     var bucket = options.bucket;
 
     if (!s3) {
-      return options.bucket;
+      const path = options.bucket;
+      return path.substr(-1) != '/' ? path + '/' : path;
     }
 
     var s3url = '';
