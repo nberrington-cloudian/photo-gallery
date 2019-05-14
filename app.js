@@ -47,7 +47,7 @@ if (envS3Type) {
 }
 if (envClusterIP) {
       options.clusterIP = envClusterIP;
-      if (options.clusterIP.indexOf("amazonaws.com")) > -1 {
+      if (options.clusterIP.indexOf("amazonaws.com") > -1) {
         options.s3Type = "aws";
       }
       else {
