@@ -5,7 +5,6 @@ var path = require("path");
 var static = require('serve-static');
 var aws = require('aws-sdk');
 var fs = require('fs');
-var str = require('str');
 const util = require('./util.js');
 var http = require('http');
 var request = require('request');
@@ -48,7 +47,7 @@ if (envS3Type) {
 }
 if (envClusterIP) {
       options.clusterIP = envClusterIP;
-      if (str.indexOf("amazonaws.com") > -1 {
+      if (options.clusterIP.indexOf("amazonaws.com") > -1 {
         options.s3Type = "aws";
       }
       else {
