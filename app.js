@@ -5,6 +5,7 @@ var path = require("path");
 var static = require('serve-static');
 var aws = require('aws-sdk');
 var fs = require('fs');
+var str = require('str');
 const util = require('./util.js');
 var http = require('http');
 var request = require('request');
@@ -27,12 +28,17 @@ var options = {
 
 
 // Go thru our expected environment values to see if they are set
-var envStorageBucket1 = process.env.BUCKET_NAME;  //required
+var envStorageBucket1 = process.env.BUCKET_NAME;  //required //BUCKET_NAME
 var envS3Type = process.env.OBJECT_STORAGE_S3_TYPE; //required
-var envStorageRegion = process.env.OBJECT_STORAGE_REGION;  //only required for AWS
-var envClusterIP = process.env.BUCKET_ENDPOINT; //only for gfs
-var envBucketID = process.env.BUCKET_ID; //only for gfs
-var envBucketPW = process.env.BUCKET_PWORD; //only for gfs
+//var envStorageRegion = process.env.OBJECT_STORAGE_REGION;  //only required for AWS
+var envStorageRegion = process.env.BUCKET_REGION;  //only required for AWS
+//var envClusterIP = process.env.BUCKET_ENDPOINT; //only for gfs
+var envClusterIP = process.env.BUCKET_HOST; //only needed for gfs
+var envBucketID1 = process.env.AWS_ACCESS_KEY_ID;
+var envBucketPW1 = process.env.AWS_SECRET_ACCESS_KEY;
+var envBucketID2 = process.env.BUCKET_ID;
+var envBucketPW2 = process.env.BUCKET_PWORD;
+
 
 if (envStorageRegion) {
     options.region = envStorageRegion;
@@ -42,15 +48,27 @@ if (envS3Type) {
 }
 if (envClusterIP) {
       options.clusterIP = envClusterIP;
+      if (str.indexOf("amazonaws.com") > -1 {
+        options.s3Type = "aws";
+      }
+      else {
+        options.s3Type = "gfs"
+      }
 }
 if (envStorageBucket1) {
     options.bucket = envStorageBucket1;
 }
-if (envBucketID) {
-      options.akid = envBucketID;
+if (envBucketID2) {
+      options.akid = envBucketID2;
 }
-if (envBucketPW) {
-      options.sak = envBucketPW;
+if (envBucketPW2) {
+      options.sak = envBucketPW2;
+}
+if (envBucketID1) {
+      options.akid = envBucketID1;
+}
+if (envBucketPW1) {
+      options.sak = envBucketPW1;
 }
 
 
