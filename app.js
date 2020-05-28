@@ -16,6 +16,7 @@ var options = {
   region: "us-west-1",
   s3Type: "aws", //"gfs" for gluster
   clusterIP: null,
+  clusterSSL: true,
   akid: null,
   sak: null
 };
@@ -32,7 +33,8 @@ var envS3Type = process.env.OBJECT_STORAGE_S3_TYPE; //required
 //var envStorageRegion = process.env.OBJECT_STORAGE_REGION;  //only required for AWS
 var envStorageRegion = process.env.BUCKET_REGION;  //only required for AWS
 //var envClusterIP = process.env.BUCKET_ENDPOINT; //only for gfs
-var envClusterIP = process.env.BUCKET_HOST; //only needed for gfs
+var envClusterIP = process.env.BUCKET_HOST;
+var envClusterPort = process.env.BUCKET_PORT;
 var envBucketID1 = process.env.AWS_ACCESS_KEY_ID;
 var envBucketPW1 = process.env.AWS_SECRET_ACCESS_KEY;
 var envBucketID2 = process.env.BUCKET_ID;
@@ -46,13 +48,19 @@ if (envS3Type) {
     options.s3Type = envS3Type;
 }
 if (envClusterIP) {
-      options.clusterIP = envClusterIP;
-      if (options.clusterIP.indexOf("amazonaws.com") > -1) {
-        options.s3Type = "aws";
-      }
-      else {
-        options.s3Type = "gfs";
-      }
+    options.clusterIP = envClusterIP;
+
+    if (!envS3Type) {
+        if (options.clusterIP.indexOf("amazonaws.com") > -1) {
+            options.s3Type = "aws";
+        }
+        else {
+            options.s3Type = "gfs";
+        }
+    }
+}
+if (envClusterPort) {
+    options.clusterSSL = (envClusterPort === "443")
 }
 if (envStorageBucket1) {
     options.bucket = envStorageBucket1;
@@ -113,7 +121,8 @@ app.post('/upload', function(req, res) {
     var s3 = new aws.S3({
       accessKeyId: options.akid,
       secretAccessKey: options.sak,
-      sslEnabled: true });
+      endpoint: options.clusterIP,
+      sslEnabled: options.clusterSSL });
     var param = {
       Bucket: options.bucket,
       Key: req.files.sampleFile.name,

@@ -22,7 +22,8 @@ module.exports = function(res,req,options) {
     s3 = new aws.S3({
       accessKeyId: akid,
       secretAccessKey: sak,
-      sslEnabled: true });
+      endpoint: options.clusterIP,
+      sslEnabled: options.clusterSSL });
   }
     var params = {
       Bucket: bucket,
